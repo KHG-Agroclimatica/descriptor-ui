@@ -10,7 +10,7 @@ export default class ActionsClassification extends actions {
     dispatch({ type: FETCH_PENDING });
 
     try {
-      const data = await sendRequest(`${this.URL}/classification`);
+      const data = await sendRequest(`${this.URL}/`);
       
       dispatch({
         type: FETCH_SUCCESS,
