@@ -1,4 +1,3 @@
-import { Button } from 'devextreme-react'
 import DataGrid, {
   Editing,
   Column,
@@ -9,15 +8,7 @@ import DataGrid, {
 import LoadPanel from 'devextreme-react/load-panel'
 import React, { Fragment, useState } from 'react'
 import useDatagridCrud from '../../../hooks/useDatagridCrud'
-import reducer from '../hooks/fieldReducer'
-import ActionsController from '../hooks/fieldReducer/actions'
-
-const initialState = {
-  data: [],
-  changes: [],
-  editRowKey: null,
-  isLoading: false,
-}
+import ActionsController from '../../../hooks/actionDatagrid'
 
 const actions = new ActionsController('http://localhost:3000/field')
 const loadPanelPosition = { of: '#gridContainer' }
@@ -36,7 +27,6 @@ const Datagrid = () => {
 
   const onInitialized = (el) => {
     temp = el.component;
-    console.log(el);
   }
 
   return (

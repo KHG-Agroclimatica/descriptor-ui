@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import reducer from "../pages/field/hooks/fieldReducer";
+import reducer from "./reducerDatagrid";
 
 const initialState = {
   data: [],

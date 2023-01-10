@@ -21,7 +21,7 @@ const htmlEditorOptions = {
   },
 };
 
-const RichTextFieldColumn = ({ id, onChangeTable, itemSource }: any) => {
+const RichTextFieldColumn = ({ id, onChangeTable, itemSource, titleForm }: any) => {
   const { countryIds } = useDescriptorContext();
 
   let datasource = [];
@@ -69,8 +69,6 @@ const RichTextFieldColumn = ({ id, onChangeTable, itemSource }: any) => {
           break;
           return;
         }
-
-
       }
     }
     // }
@@ -85,7 +83,11 @@ const RichTextFieldColumn = ({ id, onChangeTable, itemSource }: any) => {
       onSaving={onSavingValidation}
     >
       <Scrolling mode="virtual" />
-      <Editing allowAdding allowDeleting allowUpdating mode="popup" />
+      <Editing allowAdding allowDeleting allowUpdating mode="popup" popup={{
+        title: titleForm,
+        showTitle: true,
+        height: 'auto',
+      }}/>
       <Column dataField="value">
         <RequiredRule />
         <FormItem

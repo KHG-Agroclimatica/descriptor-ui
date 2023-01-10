@@ -1,11 +1,10 @@
 import List from 'devextreme-react/list'
-import { Link, useNavigate, useNavigation } from 'react-router-dom'
 import AppRouter from '../../router/AppRouter'
 
 const navigation = [
-  { id: 1, text: 'Fields', icon: 'message', path: '/field' },
-  { id: 2, text: 'Descriptors', icon: 'check', path: '/descriptor' },
-  { id: 3, text: 'Items', icon: 'trash', path: '/item' },
+  { id: 3, text: 'Classifications', icon: 'bookmark', path: '/classification' },
+  { id: 1, text: 'Fields', icon: 'dragvertical', path: '/field' },
+  { id: 2, text: 'Descriptors', icon: 'folder', path: '/descriptor' },
 ]
 
 const NavigationList = () => {

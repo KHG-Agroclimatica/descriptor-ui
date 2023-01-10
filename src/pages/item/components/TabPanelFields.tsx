@@ -17,7 +17,6 @@ const TagPanelFields = ({
     sendRequest("http://localhost:3000/descriptor/" + descriptorId + "/fields").then(
       (resp) => {
         setFields(resp);
-        console.log(resp);
       }
     );
   }, []);
@@ -36,6 +35,7 @@ const TagPanelFields = ({
             return (
               <ItemTab title={item.name} key={index.toString()}>
                 <RichTextFieldColumn
+                  titleForm={item.name}
                   itemSource={itemSource}
                   id={item._id}
                   onChangeTable={updateSourceDataTable}

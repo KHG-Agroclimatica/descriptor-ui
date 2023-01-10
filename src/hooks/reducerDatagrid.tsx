@@ -9,7 +9,7 @@ import {
   SAVING_CANCEL,
   SET_CHANGES,
   SET_EDIT_ROW_KEY,
-} from './actions.js';
+} from './actionDatagrid.js';
 
 export default function reducer(state: any, { type, payload }: any) {
   let newData;

@@ -1,4 +1,5 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import { ListClassificationPage } from "../pages/classification";
 import { ListDescriptor } from "../pages/descriptor";
 import { ListField } from "../pages/field";
 import {
@@ -6,14 +7,6 @@ import {
   ListDescriptorItem,
   RegisterDescriptorItem,
 } from "../pages/item";
-import FileUploaderImage from "../pages/item/components/ImageField/FileUploaderImage";
-import ImageFormUpload from "../pages/item/components/ImageField/ImageFormUpload";
-import {
-  ListScreenDescriptor,
-  NewScreenDescriptor,
-  ScreenLayout,
-} from "../pages/screens";
-import { DescriptorProvider } from "../pages/screens/hooks/useDescriptorProvider";
 
 const AppRouter = createBrowserRouter([
   {
@@ -26,42 +19,7 @@ const AppRouter = createBrowserRouter([
   },
   {
     path: "descriptor",
-    element: <Outlet />,
-    children: [
-      {
-        index: true,
-        // element: <FileUploaderImage />,
-        element: <ListDescriptor />,
-      },
-      {
-        path: ":id/screens",
-        element: (
-          <DescriptorProvider>
-            <ScreenLayout />
-          </DescriptorProvider>
-        ),
-        children: [
-          {
-            index: true,
-            element: <ListScreenDescriptor />,
-          },
-          {
-            path: "new",
-            element: <NewScreenDescriptor />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: "screen",
-    element: <Outlet />,
-    children: [
-      {
-        index: true,
-        element: <div>hello world</div>,
-      },
-    ],
+    element: <ListDescriptor />,
   },
   {
     path: "descriptorItems",
@@ -70,7 +28,6 @@ const AppRouter = createBrowserRouter([
       {
         index: true,
         element: <ListDescriptorItem />,
-        // element: <ImageFormUpload />,
       },
       {
         path: "new",
@@ -81,6 +38,10 @@ const AppRouter = createBrowserRouter([
         element: <RegisterDescriptorItem />,
       },
     ],
+  },
+  {
+    path: 'classification',
+    element: <ListClassificationPage/>
   },
   {
     path: "*",

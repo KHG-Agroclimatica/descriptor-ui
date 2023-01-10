@@ -1,4 +1,4 @@
-import { sendRequest } from '../../../../utils/request'
+import { sendRequest } from '../utils/request'
 
 // const URL = 'http://localhost:3000/field'
 
