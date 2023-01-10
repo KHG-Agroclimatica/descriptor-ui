@@ -19,24 +19,10 @@ import { cellTemplate } from "../../../components/ColumnTagDatagrid";
 import { countries } from "../../../utils/defaultData";
 import useDataGridDescriptor from "../hooks/useDataGridDescriptor";
 
-const actions = new ActionsDescriptor();
 const loadPanelPosition = { of: "#gridContainer" };
 
 const Datagrid = () => {
-  const {
-    state,
-    onChangesChange,
-    onEditRowKeyChange,
-    onSaving,
-    dispatch,
-    tableRef,
-    dataGridInstance,
-  } = useDatagridCrud({ actions });
-  const { fieldsData, onClickLink, validationFields } = useDataGridDescriptor({
-    actions,
-    dispatch,
-    dataGridInstance,
-  });
+  const { fieldsData, onClickLink, validationFields, state, onSaving, tableRef, onChangesChange, onEditRowKeyChange } = useDataGridDescriptor();
 
   return (
     <Fragment>
@@ -64,7 +50,7 @@ const Datagrid = () => {
           <Item name="addRowButton" />
         </Toolbar>
         <Editing
-          mode="row"
+          mode="popup"
           allowAdding
           allowDeleting
           allowUpdating
@@ -72,6 +58,7 @@ const Datagrid = () => {
           onChangesChange={onChangesChange}
           editRowKey={state.editRowKey}
           onEditRowKeyChange={onEditRowKeyChange}
+          popup={{showTitle: true, title: 'Descriptor form'}}
         />
         <Column dataField="_id" caption="Id" allowEditing={false}></Column>
         <Column dataField="name">
@@ -80,6 +67,17 @@ const Datagrid = () => {
         <Column dataField="description">
           <RequiredRule />
         </Column>
+
+        <Column
+          dataField="classificationId"
+          caption="Classification"
+          editCellComponent={TagBoxDatagrid}
+          cellTemplate={cellTemplate}
+        >
+          <RequiredRule />
+          <Lookup dataSource={fieldsData} valueExpr="_id" displayExpr="name" />
+        </Column>
+
         <Column
           dataField="fieldIds"
           caption="Fields"
