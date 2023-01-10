@@ -7,6 +7,7 @@ import DataGrid, {
 } from "devextreme-react/data-grid";
 import LoadPanel from "devextreme-react/load-panel";
 import React, { Fragment, useState } from "react";
+import TagBoxDatagrid, { cellTemplate } from "../../../components/ColumnTagDatagrid";
 import useDatagridCrud from "../../../hooks/useDatagridCrud";
 import ActionsField from "../utils/actionsField";
 
@@ -70,14 +71,21 @@ const Datagrid = () => {
             valueExpr="reference"
           />
         </Column>
-        <Column dataField="classificationId" caption="Classification">
-          <RequiredRule />
+
+        <Column
+          dataField="classificationId"
+          caption="Classification"
+          editCellComponent={TagBoxDatagrid}
+          cellTemplate={cellTemplate}
+        >
+          <RequiredRule/>
           <Lookup
             dataSource={classificationData}
-            displayExpr="name"
             valueExpr="_id"
+            displayExpr="name"
           />
         </Column>
+
       </DataGrid>
     </Fragment>
   );
