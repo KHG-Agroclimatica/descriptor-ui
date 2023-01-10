@@ -16,11 +16,6 @@ export default class actions {
   constructor(readonly URL: string) {
   }
 
-  fetchTypeField = async () => {
-    const response = await sendRequest(`${this.URL.replace('/field', '')}/typeField`)
-    return response
-  }
-
   loadOrders = async (dispatch: any) => {
     dispatch({ type: FETCH_PENDING })
 
