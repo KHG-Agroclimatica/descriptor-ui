@@ -17,6 +17,7 @@ const useDataGridDescriptor = () => {
   } = useDatagridCrud({ actions });
   const [classificationData, setClassificationData] = useState([]);
   const [fieldsData, setFieldsData] = useState([]);
+  const [classificationFields, setClassificationFields] = useState([]);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -54,7 +55,8 @@ const useDataGridDescriptor = () => {
     tableRef,
     onChangesChange,
     onEditRowKeyChange,
-    classificationData
+    classificationData,
+    classificationFields
   };
 };
 

@@ -1,6 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ListClassificationPage } from "../pages/classification";
-import { ListDescriptor } from "../pages/descriptor";
+import {
+  DescriptorLayout,
+  FormDescriptor,
+  ListDescriptor,
+} from "../pages/descriptor";
 import { ListField } from "../pages/field";
 import {
   ItemLayout as ItemContainerLayout,
@@ -19,7 +23,11 @@ const AppRouter = createBrowserRouter([
   },
   {
     path: "descriptor",
-    element: <ListDescriptor />,
+    element: <DescriptorLayout />,
+    children: [
+      { index: true, element: <ListDescriptor /> },
+      { path: "new", element: <FormDescriptor /> },
+    ],
   },
   {
     path: "descriptorItems",
@@ -40,8 +48,8 @@ const AppRouter = createBrowserRouter([
     ],
   },
   {
-    path: 'classification',
-    element: <ListClassificationPage/>
+    path: "classification",
+    element: <ListClassificationPage />,
   },
   {
     path: "*",

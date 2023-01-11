@@ -81,6 +81,7 @@ export default class actions {
   }
 
   setChanges(dispatch: any, changes: any) {
+    console.log('set changes');
     dispatch({
       type: SET_CHANGES,
       payload: changes,
