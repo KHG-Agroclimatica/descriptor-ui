@@ -6,6 +6,10 @@ export default class ActionsDescriptor extends ActionsController {
     super("http://localhost:3000/descriptor");
   }
 
+  filterById = async (id: String) => {
+    return await sendRequest(`${this.URL}/${id}`);
+  }
+
   loadFields = async () => {
     let fields: any[] = [];
     let classifications: any[] = [];

@@ -24,6 +24,15 @@ const FormDescriptor = () => {
     displayExpr: "name",
   };
 
+  const countryTagBoxSelection = {
+    dataSource: countries,
+    searchEnabled: true,
+    showSelectionControls: true,
+    applyValueMode: "useButtons",
+    valueExpr: "_id",
+    displayExpr: "name",
+  };
+
   return (
     <Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -47,18 +56,14 @@ const FormDescriptor = () => {
         <Item
           dataField="countryIds"
           isRequired
-          editorType="dxSelectBox"
-          editorOptions={{
-            valueExpr: "_id",
-            displayExpr: "name",
-            dataSource: countries,
-          }}
+          editorType="dxTagBox"
+          editorOptions={countryTagBoxSelection}
         >
           <Label>CountryIds</Label>
         </Item>
         <Item
-          colSpan={1}
           dataField="classificationId"
+          colSpan={1}
           editorType="dxSelectBox"
           editorOptions={{
             items: classificationData,
@@ -71,10 +76,10 @@ const FormDescriptor = () => {
           <Label>Classification</Label>
         </Item>
         <Item
+          dataField="fieldIds"
           colSpan={1}
           isRequired
           editorType="dxTagBox"
-          dataField="fieldIds"
           editorOptions={tagBoxSelection}
         >
           <Label>Fields</Label>

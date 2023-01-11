@@ -1,6 +1,6 @@
 import { Form } from "devextreme-react";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ActionsDescriptor from "../utils/actionsDescriptor";
 
 const providerDescriptor = new ActionsDescriptor();
@@ -11,6 +11,7 @@ const useFormDescriptor = () => {
   const [fieldData, setFieldData] = useState<Array<any>>([]);
   const [fieldFiltered, setFieldFiltered] = useState<Array<any>>([]);
   const formRef = useRef<Form>(null);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     _id: params?.id ?? "",
@@ -26,6 +27,12 @@ const useFormDescriptor = () => {
       setFieldData(resp.fields);
       setClassificationData(resp.classifications);
     });
+
+    if (params?.id) {
+      providerDescriptor
+        .filterById(params?.id)
+        .then((resp) => setFormData(resp));
+    }
   }, []);
 
   const filterFields = (e: any) => {
@@ -39,11 +46,25 @@ const useFormDescriptor = () => {
   };
 
   const onClickSave = () => {
-    const isValid = formRef?.current?.instance.validate();
-    if (!isValid) return;
+    const formValidating = formRef?.current?.instance.validate();
+    console.log(formValidating?.isValid);
+    if (!formValidating?.isValid) return;
+
     const dataContent = formRef.current?.instance.option("formData");
-    
-    
+
+    providerDescriptor
+      .sendChange(providerDescriptor.URL, {
+        type: params?.id ? "update" : "insert",
+        data: dataContent,
+        key: params?.id,
+      })
+      .then((resp) => {
+        console.log(resp);
+        navigate(-1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return {
