@@ -1,4 +1,4 @@
-import { Button } from "devextreme-react/button";
+import { Button as ButtonToolbar } from "devextreme-react/button";
 import DataGrid, {
   Editing,
   Column,
@@ -9,15 +9,14 @@ import DataGrid, {
   Toolbar,
   Item,
   Selection,
+  Button,
 } from "devextreme-react/data-grid";
-import LoadPanel from "devextreme-react/load-panel";
 import { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import TagBoxDatagrid from "../../components/ColumnTagDatagrid";
 import { cellTemplate } from "../../components/ColumnTagDatagrid";
 import { countries } from "../../utils/defaultData";
 import useDataGridDescriptor from "./hooks/useDataGridDescriptor";
-
-const loadPanelPosition = { of: "#gridContainer" };
 
 const Datagrid = () => {
   const {
@@ -30,12 +29,33 @@ const Datagrid = () => {
     onChangesChange,
     onEditRowKeyChange,
     classificationData,
-    classificationFields,
   } = useDataGridDescriptor();
+
+  const navigate = useNavigate();
+
+  const onClickNavigate = (e: any, actionType: String) => {
+
+    switch (actionType) {
+      case "NEW":
+        navigate("./new");
+        break;
+      case "EDIT":
+        navigate("./" + e.row.key);
+        break;
+      case "ITEMS":
+        navigate("/descriptorItems", {
+          state: { id: e.row.key, name: e.row.data.name },
+        });
+        break;
+      default:
+        break;
+    }
+
+    // navigate("./new");
+  };
 
   return (
     <Fragment>
-      <LoadPanel position={loadPanelPosition} visible={state.isLoading} />
       <DataGrid
         id="gridContainer"
         keyExpr="_id"
@@ -49,24 +69,20 @@ const Datagrid = () => {
         <Scrolling mode="virtual" />
         <Toolbar>
           <Item location="before">
-            <Button
-              icon="check"
+            <ButtonToolbar
+              icon="plus"
+              onClick={(e: any) => onClickNavigate(e, "NEW")}
               type="success"
-              text="Items"
-              onClick={(e) => onClickLink("/descriptorItems")}
+              text="New"
             />
           </Item>
-          <Item name="addRowButton" />
         </Toolbar>
         <Editing
-          mode="popup"
-          allowAdding
-          allowDeleting
-          allowUpdating
+          // mode="popup"
+          allowUpdating={true}
+          allowDeleting={true}
           changes={state.changes}
           onChangesChange={onChangesChange}
-          editRowKey={state.editRowKey}
-          onEditRowKeyChange={onEditRowKeyChange}
           popup={{ showTitle: true, title: "Descriptor form" }}
         />
         <Column dataField="_id" caption="Id" allowEditing={false}></Column>
@@ -116,6 +132,18 @@ const Datagrid = () => {
             valueExpr="_id"
             displayExpr="name"
           />
+        </Column>
+        <Column type="buttons">
+          <Button
+            text="Items"
+            onClick={(e: any) => onClickNavigate(e, "ITEMS")}
+          />
+          <Button
+            name="edit"
+            icon="edit"
+            onClick={(e: any) => onClickNavigate(e, "EDIT")}
+          />
+          <Button name="delete" icon="trash" />
         </Column>
       </DataGrid>
     </Fragment>

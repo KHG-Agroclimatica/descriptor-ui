@@ -17,7 +17,6 @@ const useDataGridDescriptor = () => {
   } = useDatagridCrud({ actions });
   const [classificationData, setClassificationData] = useState([]);
   const [fieldsData, setFieldsData] = useState([]);
-  const [classificationFields, setClassificationFields] = useState([]);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -34,7 +33,8 @@ const useDataGridDescriptor = () => {
     return false;
   }, []);
 
-  const onClickLink = useCallback((route: string) => {
+  const onClickLink = useCallback((e: any, route: string) => {
+    console.log(e);
     const selectedRows = dataGridInstance().getSelectedRowsData();
 
     if (selectedRows.length == 0) return;
@@ -55,8 +55,7 @@ const useDataGridDescriptor = () => {
     tableRef,
     onChangesChange,
     onEditRowKeyChange,
-    classificationData,
-    classificationFields
+    classificationData
   };
 };
 

@@ -21,6 +21,7 @@ const useFormItem = () => {
     if (params?.id) {
       sendRequest(`http://localhost:3000/descriptor_items/${params.id}`).then(
         (data) => {
+          console.log(data);
           setItemData({
             name: data.name,
             countryIds: data?.countryIds ?? [],

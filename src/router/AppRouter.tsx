@@ -27,6 +27,7 @@ const AppRouter = createBrowserRouter([
     children: [
       { index: true, element: <ListDescriptor /> },
       { path: "new", element: <FormDescriptor /> },
+      { path: ":id", element: <FormDescriptor /> },
     ],
   },
   {
