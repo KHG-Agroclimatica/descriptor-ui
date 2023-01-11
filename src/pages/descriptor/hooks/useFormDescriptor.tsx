@@ -1,4 +1,4 @@
-import { Item } from "devextreme-react/form";
+import { Form } from "devextreme-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import ActionsDescriptor from "../utils/actionsDescriptor";
@@ -10,7 +10,16 @@ const useFormDescriptor = () => {
   const [classificationData, setClassificationData] = useState<Array<any>>([]);
   const [fieldData, setFieldData] = useState<Array<any>>([]);
   const [fieldFiltered, setFieldFiltered] = useState<Array<any>>([]);
-  const itemFieldRef = useRef<Item>(null);
+  const formRef = useRef<Form>(null);
+
+  const [formData, setFormData] = useState({
+    _id: params?.id ?? "",
+    name: "",
+    description: "",
+    countryIds: [],
+    classificationId: [],
+    fieldIds: [],
+  });
 
   useEffect(() => {
     providerDescriptor.loadFields().then((resp) => {
@@ -19,14 +28,22 @@ const useFormDescriptor = () => {
     });
   }, []);
 
-  const filterFields = (classificationId: String) => {
+  const filterFields = (e: any) => {
+    const classificationId = e?.value;
+
     const filtered = fieldData.filter((item) =>
       item?.classificationId.includes(classificationId)
     );
-    console.log(filtered);
-    
-    
+
     setFieldFiltered(filtered);
+  };
+
+  const onClickSave = () => {
+    const isValid = formRef?.current?.instance.validate();
+    if (!isValid) return;
+    const dataContent = formRef.current?.instance.option("formData");
+    
+    
   };
 
   return {
@@ -34,7 +51,9 @@ const useFormDescriptor = () => {
     classificationData,
     fieldFiltered,
     filterFields,
-    itemFieldRef
+    formRef,
+    onClickSave,
+    formData,
   };
 };
 

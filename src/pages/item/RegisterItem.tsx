@@ -1,5 +1,5 @@
 import Form, { Item, Label, RequiredRule } from "devextreme-react/form";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 import Button from "devextreme-react/button";
 import TagPanelFields from "./components/TabPanelFields";
 import useFormItem from "./hooks/useFormItem";

@@ -1,8 +1,6 @@
-import { List } from "devextreme-react";
 import Button from "devextreme-react/button";
-import DropDownBox from "devextreme-react/drop-down-box";
 import Form, { Item, Label, SimpleItem } from "devextreme-react/form";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 import { countries } from "../../utils/defaultData";
 import useFormDescriptor from "./hooks/useFormDescriptor";
 
@@ -12,26 +10,19 @@ const FormDescriptor = () => {
     params,
     fieldFiltered,
     filterFields,
-    itemFieldRef,
+    formRef,
+    onClickSave,
+    formData,
   } = useFormDescriptor();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    countryIds: [],
-    classificationId: [],
-    fieldIds: [],
-  });
-
-  const onClickSave = (e: any) => {
-    console.log(e);
+  const tagBoxSelection = {
+    dataSource: fieldFiltered,
+    searchEnabled: true,
+    showSelectionControls: true,
+    applyValueMode: "useButtons",
+    valueExpr: "_id",
+    displayExpr: "name",
   };
-
-  const onClassificationChange = (e: any) => {
-    filterFields(e?.value);
-  };
-
-  console.log("hello", fieldFiltered);
 
   return (
     <Fragment>
@@ -50,7 +41,7 @@ const FormDescriptor = () => {
           useSubmitBehavior={true}
         />
       </div>
-      <Form colCount={2} formData={formData} >
+      <Form colCount={2} formData={formData} ref={formRef}>
         <SimpleItem dataField="name" isRequired={true} colSpan={1} />
 
         <Item
@@ -73,19 +64,18 @@ const FormDescriptor = () => {
             items: classificationData,
             displayExpr: "name",
             valueExpr: "_id",
-            onValueChanged: onClassificationChange,
+            onValueChanged: filterFields,
           }}
           isRequired
         >
           <Label>Classification</Label>
         </Item>
         <Item
-          ref={itemFieldRef}
           colSpan={1}
           isRequired
-          editorType="dxDropDownBox"
+          editorType="dxTagBox"
           dataField="fieldIds"
-          // template={}
+          editorOptions={tagBoxSelection}
         >
           <Label>Fields</Label>
         </Item>
