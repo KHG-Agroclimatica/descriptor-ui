@@ -15,14 +15,14 @@ const useDataGridDescriptor = () => {
     tableRef,
     dataGridInstance,
   } = useDatagridCrud({ actions });
-
+  const [classificationData, setClassificationData] = useState([]);
   const [fieldsData, setFieldsData] = useState([]);
   const navigate = useNavigate();
-  // const [fieldsData, setfieldsData] = useState(second)
 
   React.useEffect(() => {
     actions.loadFields().then((resp: any) => {
-      setFieldsData(resp);
+      setFieldsData(resp.fields);
+      setClassificationData(resp.classifications);
       actions.loadOrders(dispatch);
     });
   }, []);
@@ -53,7 +53,8 @@ const useDataGridDescriptor = () => {
     onSaving,
     tableRef,
     onChangesChange,
-    onEditRowKeyChange
+    onEditRowKeyChange,
+    classificationData
   };
 };
 

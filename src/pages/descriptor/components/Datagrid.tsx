@@ -12,8 +12,6 @@ import DataGrid, {
 } from "devextreme-react/data-grid";
 import LoadPanel from "devextreme-react/load-panel";
 import { Fragment } from "react";
-import useDatagridCrud from "../../../hooks/useDatagridCrud";
-import ActionsDescriptor from "../utils/actionsDescriptor";
 import TagBoxDatagrid from "../../../components/ColumnTagDatagrid";
 import { cellTemplate } from "../../../components/ColumnTagDatagrid";
 import { countries } from "../../../utils/defaultData";
@@ -22,7 +20,17 @@ import useDataGridDescriptor from "../hooks/useDataGridDescriptor";
 const loadPanelPosition = { of: "#gridContainer" };
 
 const Datagrid = () => {
-  const { fieldsData, onClickLink, validationFields, state, onSaving, tableRef, onChangesChange, onEditRowKeyChange } = useDataGridDescriptor();
+  const {
+    fieldsData,
+    onClickLink,
+    validationFields,
+    state,
+    onSaving,
+    tableRef,
+    onChangesChange,
+    onEditRowKeyChange,
+    classificationData
+  } = useDataGridDescriptor();
 
   return (
     <Fragment>
@@ -58,7 +66,7 @@ const Datagrid = () => {
           onChangesChange={onChangesChange}
           editRowKey={state.editRowKey}
           onEditRowKeyChange={onEditRowKeyChange}
-          popup={{showTitle: true, title: 'Descriptor form'}}
+          popup={{ showTitle: true, title: "Descriptor form" }}
         />
         <Column dataField="_id" caption="Id" allowEditing={false}></Column>
         <Column dataField="name">
@@ -71,11 +79,9 @@ const Datagrid = () => {
         <Column
           dataField="classificationId"
           caption="Classification"
-          editCellComponent={TagBoxDatagrid}
-          cellTemplate={cellTemplate}
         >
           <RequiredRule />
-          <Lookup dataSource={fieldsData} valueExpr="_id" displayExpr="name" />
+          <Lookup dataSource={classificationData} valueExpr="_id" displayExpr="name" />
         </Column>
 
         <Column
