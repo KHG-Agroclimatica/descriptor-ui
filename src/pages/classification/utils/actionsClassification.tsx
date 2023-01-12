@@ -1,9 +1,10 @@
 import actions, { FETCH_ERROR, FETCH_PENDING, FETCH_SUCCESS } from '../../../hooks/actionDatagrid'
+import { ConfigEnv } from '../../../utils/configEnv';
 import { sendRequest } from '../../../utils/request';
 
 export default class ActionsClassification extends actions {
   constructor() {
-    super('http://localhost:3000/classification')
+    super(ConfigEnv.DESCRIPTOR_API_URL+"/classification");
   }
 
   async loadClassification(dispatch: any) {
