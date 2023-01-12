@@ -11,7 +11,7 @@ import TagBoxDatagrid, { cellTemplate } from "../../../components/ColumnTagDatag
 import useDatagridCrud from "../../../hooks/useDatagridCrud";
 import ActionsField from "../utils/actionsField";
 
-const actions = new ActionsField("http://localhost:3000/field");
+const actions = new ActionsField();
 const loadPanelPosition = { of: "#gridContainer" };
 
 let temp: any = null;
