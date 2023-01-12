@@ -21,20 +21,18 @@ import useDataGridDescriptor from "./hooks/useDataGridDescriptor";
 const Datagrid = () => {
   const {
     fieldsData,
-    onClickLink,
-    validationFields,
     state,
-    onSaving,
     tableRef,
-    onChangesChange,
-    onEditRowKeyChange,
     classificationData,
+    relationshipData,
+    validationFields,
+    onSaving,
+    onChangesChange,
   } = useDataGridDescriptor();
 
   const navigate = useNavigate();
 
   const onClickNavigate = (e: any, actionType: String) => {
-
     switch (actionType) {
       case "NEW":
         navigate("./new");
@@ -129,6 +127,13 @@ const Datagrid = () => {
               _id: i._id.toString(),
               name: i.name,
             }))}
+            valueExpr="_id"
+            displayExpr="name"
+          />
+        </Column>
+        <Column dataField="relationshipId" caption="Ref">
+          <Lookup
+            dataSource={relationshipData}
             valueExpr="_id"
             displayExpr="name"
           />

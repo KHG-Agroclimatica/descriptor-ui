@@ -10,6 +10,8 @@ const useFormDescriptor = () => {
   const [classificationData, setClassificationData] = useState<Array<any>>([]);
   const [fieldData, setFieldData] = useState<Array<any>>([]);
   const [fieldFiltered, setFieldFiltered] = useState<Array<any>>([]);
+  const [relationshipData, setRelationshipData] = useState<Array<any>>([]);
+  const [firstRenderData, setFirstRenderData] = useState<any>();
   const formRef = useRef<Form>(null);
   const navigate = useNavigate();
 
@@ -26,12 +28,14 @@ const useFormDescriptor = () => {
     providerDescriptor.loadFields().then((resp) => {
       setFieldData(resp.fields);
       setClassificationData(resp.classifications);
+      setRelationshipData(resp.relationships);
     });
 
     if (params?.id) {
-      providerDescriptor
-        .filterById(params?.id)
-        .then((resp) => setFormData(resp));
+      providerDescriptor.filterById(params?.id).then((resp) => {
+        setFormData({...resp});
+        setFirstRenderData({...resp});
+      });
     }
   }, []);
 
@@ -42,12 +46,17 @@ const useFormDescriptor = () => {
       item?.classificationId.includes(classificationId)
     );
 
+    if (e?.value != firstRenderData?.classificationId)
+      setFormData({
+        ...formData,
+        fieldIds: [],
+      });
+
     setFieldFiltered(filtered);
   };
 
   const onClickSave = () => {
     const formValidating = formRef?.current?.instance.validate();
-    console.log(formValidating?.isValid);
     if (!formValidating?.isValid) return;
 
     const dataContent = formRef.current?.instance.option("formData");
@@ -69,12 +78,13 @@ const useFormDescriptor = () => {
 
   return {
     params,
+    relationshipData,
     classificationData,
     fieldFiltered,
-    filterFields,
     formRef,
-    onClickSave,
     formData,
+    filterFields,
+    onClickSave,
   };
 };
 

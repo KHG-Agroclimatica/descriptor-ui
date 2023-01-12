@@ -6,13 +6,14 @@ import useFormDescriptor from "./hooks/useFormDescriptor";
 
 const FormDescriptor = () => {
   const {
+    relationshipData,
     classificationData,
     params,
     fieldFiltered,
-    filterFields,
-    formRef,
-    onClickSave,
     formData,
+    formRef,
+    filterFields,
+    onClickSave,
   } = useFormDescriptor();
 
   const tagBoxSelection = {
@@ -92,6 +93,20 @@ const FormDescriptor = () => {
           isRequired
         >
           <Label text="Description" />
+        </Item>
+        <Item
+          dataField="relationshipId"
+          colSpan={1}
+          editorType="dxSelectBox"
+          editorOptions={{
+            items: relationshipData,
+            displayExpr: "name",
+            valueExpr: "_id",
+            reset: true,
+          }}
+          isRequired
+        >
+          <Label>Relationship with:</Label>
         </Item>
       </Form>
     </Fragment>
