@@ -4,18 +4,19 @@ import actions, {
   FETCH_PENDING,
   FETCH_SUCCESS,
 } from "../../../hooks/actionDatagrid";
+import { ConfigEnv } from "../../../utils/configEnv";
 
 export default class ActionsItem extends actions {
   constructor() {
-    super("http://localhost:3000/descriptor_items");
+    super(ConfigEnv.DESCRIPTOR_API_URL + "/descriptor_items");
   }
 
-  loadItemsByDescriptor = async ( descriptorId: string, dispatch: any) => {
+  loadItemsByDescriptor = async (descriptorId: string, dispatch: any) => {
     dispatch({ type: FETCH_PENDING });
 
     try {
       const data = await sendRequest(`${this.URL}/descriptor/${descriptorId}`);
-      
+
       dispatch({
         type: FETCH_SUCCESS,
         payload: {
