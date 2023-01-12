@@ -1,9 +1,10 @@
 import { sendRequest } from "../../../utils/request";
 import ActionsController from "../../../hooks/actionDatagrid";
+import { ConfigEnv } from "../../../utils/configEnv";
 
 export default class ActionsDescriptor extends ActionsController {
   constructor() {
-    super("http://localhost:3000/descriptor");
+    super(ConfigEnv.DESCRIPTOR_API_URL+"/descriptor");
   }
 
   filterById = async (id: String) => {
