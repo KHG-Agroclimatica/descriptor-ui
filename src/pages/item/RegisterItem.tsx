@@ -1,11 +1,9 @@
-import Form, { Item, Label, RequiredRule } from "devextreme-react/form";
 import { Fragment } from "react";
 import Button from "devextreme-react/button";
 import TagPanelFields from "./components/TabPanelFields";
 import useFormItem from "./hooks/useFormItem";
-import { countries } from "../../utils/defaultData";
 import { useParams } from "react-router-dom";
-import { useDescriptorContext } from "./context/DescriptorContext";
+import FormItem from "./components/FormItem";
 
 const RegisterItem = () => {
   const {
@@ -14,21 +12,9 @@ const RegisterItem = () => {
     updateSourceDataTable,
     descriptorId,
     itemData,
+    setItemData
   } = useFormItem();
-  const { countryIds } = useDescriptorContext();
   const params = useParams();
-
-  const tagBoxSelection = {
-    items: countries
-      .filter((i) => countryIds.includes(i._id.toString()))
-      .map((i) => ({ _id: i._id.toString(), name: i.name })),
-    searchEnabled: true,
-    value: itemData.countryIds,
-    showSelectionControls: true,
-    applyValueMode: "useButtons",
-    valueExpr: "_id",
-    displayExpr: "name",
-  };
 
   return (
     <Fragment>
@@ -45,20 +31,7 @@ const RegisterItem = () => {
           useSubmitBehavior={true}
         />
       </div>
-
-      <Form ref={formRef} showValidationSummary={true} formData={itemData}>
-        <Item dataField="name" caption="Identification name">
-          <RequiredRule message="Name is required" />
-        </Item>
-        <Item
-          dataField="countryIds"
-          editorType="dxTagBox"
-          editorOptions={tagBoxSelection}
-        >
-          <Label text="Country" />
-          <RequiredRule message="Country is required" />
-        </Item>
-      </Form>
+      <FormItem formRef={formRef} itemData={itemData} setItemData={setItemData}/>
 
       <TagPanelFields
         datasourceItems={itemData}

@@ -13,6 +13,8 @@ const TagPanelFields = ({
   const [fields, setFields] = useState([]);
   const params = useParams();
 
+  console.log(datasourceItems);
+
   useEffect(() => {
     sendRequest("http://localhost:3000/descriptor/" + descriptorId + "/fields").then(
       (resp) => {
@@ -21,6 +23,7 @@ const TagPanelFields = ({
     );
   }, []);
 
+  console.log(datasourceItems);
   return (
     <TabPanel animationEnabled={true} swipeEnabled={true} className="mt-4">
       {fields.map((item: any, index: number) => {

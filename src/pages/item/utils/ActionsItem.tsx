@@ -28,4 +28,31 @@ export default class ActionsItem extends actions {
       throw err;
     }
   };
+
+  fetchResource = ({ keyAction, data, id }: any) => {
+    let uri = this.URL + "/";
+
+    switch (keyAction) {
+      case "CREATE":
+        return sendRequest(`${uri}/create`, "POST", data);
+
+      case "UPDATE":
+        return sendRequest(`${uri}/${id}`, "PUT", data);
+
+      case "GET_BY_ID":
+        uri = uri.concat('/'+id);
+        break;
+
+      case "GET_RELATIONSHIP":
+        uri = uri.replace('/descriptor_items', '/descriptor');
+        uri = uri.concat(`${id}/relationship`);
+        break;
+
+      default:
+        break;
+    }
+
+    console.log(uri);
+    return sendRequest(uri);
+  };
 }

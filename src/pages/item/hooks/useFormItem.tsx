@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { sendRequest } from "../../../utils/request";
 import { useDescriptorContext } from "../context/DescriptorContext";
+import ActionsItem from "../utils/ActionsItem";
 
 let dataTableContent: Array<any> = [];
+
+const providerActions = new ActionsItem();
+
 const useFormItem = () => {
   const { id: descriptorId } = useDescriptorContext();
   const navigate = useNavigate();
@@ -13,23 +16,21 @@ const useFormItem = () => {
     name: "",
     countryIds: [],
     fields: [],
+    referencesIds: [],
   });
 
   useEffect(() => {
     dataTableContent = [];
 
+    console.log(params?.id);
     if (params?.id) {
-      sendRequest(`http://localhost:3000/descriptor_items/${params.id}`).then(
-        (data) => {
+      providerActions
+        .fetchResource({ keyAction: "GET_BY_ID", id: params.id })
+        .then((data) => {
           console.log(data);
-          setItemData({
-            name: data.name,
-            countryIds: data?.countryIds ?? [],
-            fields: data.fields,
-          });
+          setItemData(data);
           return;
-        }
-      );
+        });
     }
   }, []);
 
@@ -37,23 +38,24 @@ const useFormItem = () => {
     const x = formRef.current.instance.validate();
     if (!x.isValid) return false;
 
-    let metadataApi = {
-      url: "http://localhost:3000/descriptor_items/create",
-      method: "POST",
-    };
-    if ("id" in params)
-      metadataApi = {
-        url: `http://localhost:3000/descriptor_items/${params.id}`,
-        method: "PUT",
-      };
+    let actionKey = "CREATE";
+    if ("id" in params) actionKey = "UPDATE";
 
-    sendRequest(metadataApi.url, metadataApi.method, {
+    const formDataFetch = {
       descriptorId,
       ...formRef.current?.instance.option("formData"),
       fields: dataTableContent,
-    }).then((resp) => {
-      navigate(-1);
-    });
+    };
+
+    providerActions
+      .fetchResource({
+        keyAction: actionKey,
+        data: formDataFetch,
+        id: params?.id,
+      })
+      .then((resp) => {
+        navigate(-1);
+      });
   };
 
   const updateSourceDataTable = (source: any) => {
@@ -84,6 +86,7 @@ const useFormItem = () => {
     formRef,
     descriptorId,
     itemData,
+    setItemData,
   };
 };
 
