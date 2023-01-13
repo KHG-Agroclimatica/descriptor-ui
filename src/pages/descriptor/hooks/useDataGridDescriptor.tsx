@@ -35,21 +35,7 @@ const useDataGridDescriptor = () => {
     return false;
   }, []);
 
-  // const onClickLink = useCallback((e: any, route: string) => {
-  //   console.log(e);
-  //   const selectedRows = dataGridInstance().getSelectedRowsData();
-
-  //   if (selectedRows.length == 0) return;
-
-  //   if (route == "/screens") route = selectedRows[0]._id + route;
-
-  //   navigate(route, {
-  //     state: { id: selectedRows[0]._id, name: selectedRows[0].name },
-  //   });
-  // }, []);
-
   return {
-    // onClickLink,
     relationshipData,
     fieldsData,
     state,
