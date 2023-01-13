@@ -29,6 +29,11 @@ const FormItem = ({ formRef, itemData, setItemData }: any) => {
   });
 
   useEffect(() => {
+    setGridBoxValue(itemData?.referencesIds);
+  }, [itemData])
+  
+
+  useEffect(() => {
     providerActions.fetchResource({keyAction: 'GET_RELATIONSHIP', id: descriptorId}).then((relationshipResp) => {
       if (!relationshipResp) return;
 
