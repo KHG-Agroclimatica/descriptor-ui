@@ -1,6 +1,5 @@
 import DataGrid, {
   Column,
-  CustomRule,
   Editing,
   FormItem,
   Lookup,
@@ -27,16 +26,9 @@ const RichTextFieldColumn = ({ id, onChangeTable, itemSource, titleForm }: any) 
   let datasource = [];
   if (itemSource.length > 0) datasource = itemSource[0].value;
 
-
-  const validationLanguage = (e: any) => {
-    console.log(e);
-    return false;
-  }
-
   const notifyErrorSaving = (message: string = 'Error when saving') => {
     NotifyWarning(message);
   }
-
 
   const onSavingValidation = (e: any) => {
     if (e.changes.length == 0 || e.changes[0].type == 'remove') {

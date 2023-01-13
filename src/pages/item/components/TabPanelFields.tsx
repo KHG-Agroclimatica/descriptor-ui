@@ -1,6 +1,7 @@
 import TabPanel, { Item as ItemTab } from "devextreme-react/tab-panel";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { ConfigEnv } from "../../../utils/configEnv";
 import { sendRequest } from "../../../utils/request";
 import ImageList from "./ImageField/ImageTab";
 import RichTextFieldColumn from "./RichTextFieldColumn";
@@ -13,17 +14,14 @@ const TagPanelFields = ({
   const [fields, setFields] = useState([]);
   const params = useParams();
 
-  console.log(datasourceItems);
-
   useEffect(() => {
-    sendRequest("http://localhost:3000/descriptor/" + descriptorId + "/fields").then(
+    sendRequest(ConfigEnv.DESCRIPTOR_API_URL+"/descriptor/" + descriptorId + "/fields").then(
       (resp) => {
         setFields(resp);
       }
     );
   }, []);
 
-  console.log(datasourceItems);
   return (
     <TabPanel animationEnabled={true} swipeEnabled={true} className="mt-4">
       {fields.map((item: any, index: number) => {

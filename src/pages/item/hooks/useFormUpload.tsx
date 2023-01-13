@@ -5,6 +5,7 @@ import FileUploaderImage from "../components/ImageField/FileUploaderImage";
 import { sendRequest } from "../../../utils/request";
 import { DescriptorContext } from "../../screens/hooks/useDescriptorProvider";
 import { useParams } from "react-router-dom";
+import { ConfigEnv } from "../../../utils/configEnv";
 
 const useFormUpload = ({ onHidePopup, fieldId, visiblePopup, selectedImage }: any) => {
   const { descriptor } = useContext(DescriptorContext);
@@ -44,7 +45,7 @@ const useFormUpload = ({ onHidePopup, fieldId, visiblePopup, selectedImage }: an
         form.append("replaceImage", urlImage);
         form.append("image", result);
 
-        const responseApi = await fetch("http://localhost:3007/upload", {
+        const responseApi = await fetch(ConfigEnv.IMAGE_API_URL+"/upload", {
           method: "POST",
           body: form,
         });
@@ -69,7 +70,7 @@ const useFormUpload = ({ onHidePopup, fieldId, visiblePopup, selectedImage }: an
     };
 
     try {
-      const responseApiDescriptor = await sendRequest(`http://localhost:3000/descriptor_items/${params.id}/uploadImage`, 'POST', formBody);
+      const responseApiDescriptor = await sendRequest(`${ConfigEnv.DESCRIPTOR_API_URL}/descriptor_items/${params.id}/uploadImage`, 'POST', formBody);
       return responseApiDescriptor;
     } catch (err) {
       console.log(err);

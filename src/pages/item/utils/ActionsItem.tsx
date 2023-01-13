@@ -52,7 +52,6 @@ export default class ActionsItem extends actions {
         break;
     }
 
-    console.log(uri);
     return sendRequest(uri);
   };
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { ConfigEnv } from '../../../utils/configEnv';
 import { sendRequest } from '../../../utils/request';
 
 const useImageTab = ({ dataSourceField, fieldId }: any) => {
@@ -38,7 +39,7 @@ const useImageTab = ({ dataSourceField, fieldId }: any) => {
     }
 
     const onClickDelete = (e: any) => {
-        sendRequest(`http://localhost:3000/descriptor_items/${params.id}/deleteImage`, 'POST', {
+        sendRequest(`${ConfigEnv.DESCRIPTOR_API_URL}/descriptor_items/${params.id}/deleteImage`, 'POST', {
             fieldId,
             imageId: e.row.key,
             imageURI: e.row.data.uri

@@ -22,12 +22,10 @@ const useFormItem = () => {
   useEffect(() => {
     dataTableContent = [];
 
-    console.log(params?.id);
     if (params?.id) {
       providerActions
         .fetchResource({ keyAction: "GET_BY_ID", id: params.id })
         .then((data) => {
-          console.log(data);
           setItemData(data);
           return;
         });

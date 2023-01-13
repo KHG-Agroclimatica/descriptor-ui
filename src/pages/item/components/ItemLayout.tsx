@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import MainSectionLayout from "../../../layouts/MainSectionLayout";
+import { ConfigEnv } from "../../../utils/configEnv";
 import { sendRequest } from "../../../utils/request";
 import {
   DescriptorContext,
@@ -27,7 +28,7 @@ const ItemLayout = () => {
   });
 
   useEffect(() => {
-    sendRequest(`http://localhost:3000/descriptor/${location.state.id}`).then(
+    sendRequest(`${ConfigEnv.DESCRIPTOR_API_URL}/descriptor/${location.state.id}`).then(
       (data) => {
         setState({
           id: location.state.id,
